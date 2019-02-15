@@ -1,0 +1,6 @@
+tasades <- read.csv ("C://Users//ALUMNO-D26//Desktop/tasa de desocupacion mensual 2006-2018.csv")
+tstasades <- ts(base2, start = 2006,end = 2018, frequency = 12)
+tsdesocadi <- decompose(tstasades)
+tsdesocadimult <- decompose(tstasades, type = "mult")
+plot(tsdesocadi)
+plot(tsdesocadimult)
