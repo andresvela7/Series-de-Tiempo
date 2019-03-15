@@ -1,0 +1,30 @@
+p<-read.csv("C://Users//ALUMNO-D26//Desktop//pibhist.csv")
+ph<- ts(p, start = 1961,end = 2017, frequency = 1)
+prono1p <-holt(ph,h=15)
+prono2p <-holt(ph,damped=TRUE, phi=0.9, h=15)
+pronosesp <- ses(ph, alpha = 0.9, h=15)
+autoplot(ph)+
+  autolayer(prono1p, series="Holt",PI=FALSE)+
+  autolayer(prono2p, series="Amortiguado Holt",PI=FALSE)+
+  autolayer(pronosesp, series="Ses",PI=FALSE)+
+  ggtitle("pronosticos")+ xlab("año")+
+  ylab("Pib h")+
+  guides(colour=guide_legend(title="prono"))
+e1p <- tsCV(ph,ses , h=1)
+e2p <- tsCV(ph,holt , h=1)
+e3p <- tsCV(ph,holt, damped=TRUE , h=1)
+##MSE MEDIA ERRORES ESTANDARES###
+mean(e1p^2, na.rm = TRUE)
+#13.05 escogemos este
+mean(e2p^2, na.rm = TRUE)
+#13.859
+mean(e3p^2, na.rm = TRUE)
+#13.854
+
+
+mean(abs(e1p), na.rm = TRUE)
+#2.74 escogemos este
+mean(abs(e2p), na.rm = TRUE)
+#2.91
+mean(abs(e3p), na.rm = TRUE)
+#2.79
